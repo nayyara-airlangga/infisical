@@ -229,7 +229,7 @@ func formatAsYaml(envs []models.SingleEnvironmentVariable) string {
 	for _, env := range envs {
 		if strings.Contains(env.Value, "\n") {
 			dotenv += fmt.Sprintf("%s: |\n", env.Key)
-			dotenv += strings.ReplaceAll(env.Value, "\n", "  \n")
+			dotenv += strings.ReplaceAll(env.Value, "\n", "\n  ")
 			dotenv += "\n"
 		} else {
 			dotenv += fmt.Sprintf("%s: %s\n", env.Key, env.Value)
