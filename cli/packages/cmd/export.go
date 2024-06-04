@@ -227,7 +227,13 @@ func formatAsDotEnvExport(envs []models.SingleEnvironmentVariable) string {
 func formatAsYaml(envs []models.SingleEnvironmentVariable) string {
 	var dotenv string
 	for _, env := range envs {
-		dotenv += fmt.Sprintf("%s: %s\n", env.Key, env.Value)
+		if strings.Contains(env.Value, "\n") {
+			dotenv += fmt.Sprintf("%s: |\n", env.Key)
+			dotenv += strings.ReplaceAll(env.Value, "\n", "  \n")
+			dotenv += "\n"
+		} else {
+			dotenv += fmt.Sprintf("%s: %s\n", env.Key, env.Value)
+		}
 	}
 	return dotenv
 }
